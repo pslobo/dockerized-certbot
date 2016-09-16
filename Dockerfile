@@ -20,7 +20,6 @@ RUN export BUILD_DEPS="git \
     && pip --no-cache-dir install virtualenv \
     && git clone https://github.com/letsencrypt/letsencrypt /opt/certbot/src \
     && virtualenv --no-site-packages -p python2 /opt/certbot/venv \
-#    && sed -i '/^BIO \*BIO_new_mem_buf(const void \*buf, int len);/ d' /usr/include/openssl/bio.h \
     && /opt/certbot/venv/bin/pip install \
         -e /opt/certbot/src/acme \
         -e /opt/certbot/src \
@@ -30,6 +29,6 @@ RUN export BUILD_DEPS="git \
     && rm -rf /var/cache/apk/*
 
 EXPOSE 80 443
-VOLUME /etc/letsencrypt /var/lib/letsencrypt
+VOLUME /etc/letsencrypt /var/lib/letsencrypt /var/www
 
 ENTRYPOINT ["certbot"]
