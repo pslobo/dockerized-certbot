@@ -1,13 +1,12 @@
-# Dockerized Certbot Client
+# What is Certbot
 
-[Certbot](https://certbot.eff.org) is a tool to easily deploy and renew [Let's Encrypt](https://letsencrypt.org) certificates. Being installed on Alpine linux ensures the smallest possible container while still maintaining all it's functionality.
+> [Certbot](https://certbot.eff.org) is an easy-to-use automatic client that fetches and deploys SSL/TLS certificates for your webserver. Certbot was developed by EFF and others as a client for [Let's Encrypt](https://letsencrypt.org) and was previously known as "the official Let’s Encrypt client" or "the Let’s Encrypt Python client." Certbot will also work with any other CAs that support the ACME protocol.
 
 
-## Usage and Supported Plugins
+## How to use this image
 
-### Apache
-Description: Apache Web Server plugin - Beta
-
+### Start a Certbot instance with the Apache plugin
+In it's simplest form, starting an instance is as easy as:
 
     docker run -it \
                --rm \
@@ -15,22 +14,27 @@ Description: Apache Web Server plugin - Beta
                -v /etc/letsencrypt:/etc/letsencrypt \
                -v /var/lib/letsencrypt:/var/lib/letsencrypt \
                -v /var/www:/var/www \
-               palobo/certbot -t install -m me@myemail.com --apache -d my.domain.com
+               palobo/certbot -t install --apache -d DOMAIN
+
+- `DOMAIN` is the domain name to apply. For multiple domains use multiple -d flags.
 
 
-### Webroot
+### Start a Certbot instance with the Webroot plugin
 
     docker run -it \
                --rm \
                -v /etc/letsencrypt:/etc/letsencrypt \
                -v /var/lib/letsencrypt:/var/lib/letsencrypt \
                -v /var/www:/var/www \
-               palobo/certbot -t certonly -m me@myemail.com -w /var/www -d my.domain.com
+               palobo/certbot -t certonly --webroot -w WEBROOT_PATH -d DOMAIN
 
-### Standalone
+- `WEBROOT_PATH` is a public_html / webroot path. This can be specified multiple times to handle different domains; each domain will have the webroot path that preceded it and
+- `DOMAIN` is the domain name to apply. For multiple domains use multiple -d flags
 
-    docker run --rm \
-               -it \
+### Start a Certbot instance with the Standalone plugin
+
+    docker run -it \
+               --rm \
                -p 443:443 \
                -v /etc/letsencrypt:/etc/letsencrypt \
                -v $(pwd)/log:/var/log/letsencrypt \
