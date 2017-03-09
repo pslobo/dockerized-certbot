@@ -1,5 +1,5 @@
 FROM alpine:3.3
-MAINTAINER Pedro Lobo <https://github.com/pslobo>
+LABEL maintainer="Pedro Lobo <https://github.com/pslobo>"
 
 WORKDIR /opt/certbot
 ENV PATH /opt/certbot/venv/bin:$PATH
