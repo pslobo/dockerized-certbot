@@ -8,13 +8,13 @@ RUN export BUILD_DEPS="git \
                 build-base \
                 libffi-dev \
                 linux-headers \
-                openssl-dev \
                 py-pip \
                 python-dev" \
     && apk -U upgrade \
     && apk add dialog \
                 python \
-                augeas-libs \
+                openssl-dev \
+		augeas-libs \
                 ${BUILD_DEPS} \
 
     && pip --no-cache-dir install virtualenv \
@@ -24,8 +24,8 @@ RUN export BUILD_DEPS="git \
         -e /opt/certbot/src/acme \
         -e /opt/certbot/src \
         -e /opt/certbot/src/certbot-apache \
-        -e /opt/certbot/src/certbot-nginx\
-	&& apk del ${BUILD_DEPS} \
+        -e /opt/certbot/src/certbot-nginx \ 
+    && apk del ${BUILD_DEPS} \
     && rm -rf /var/cache/apk/*
 
 EXPOSE 80 443

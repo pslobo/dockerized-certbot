@@ -8,38 +8,50 @@
 ### Start a Certbot instance with the Apache plugin
 In it's simplest form, starting an instance is as easy as:
 
-    docker run -it \
-               --rm \
-               --net host \
-               -v /etc/letsencrypt:/etc/letsencrypt \
-               -v /var/lib/letsencrypt:/var/lib/letsencrypt \
-               -v /var/www:/var/www \
-               palobo/certbot -t install --apache -d DOMAIN
+    docker container run -it \
+           --rm \
+           --net host \
+           -v /etc/letsencrypt:/etc/letsencrypt \
+           -v /var/lib/letsencrypt:/var/lib/letsencrypt \
+           -v /var/www:/var/www \
+           palobo/certbot -t install --apache -d DOMAIN
 
 - `DOMAIN` is the domain name to apply. For multiple domains use multiple -d flags.
 
 
 ### Start a Certbot instance with the Webroot plugin
 
-    docker run -it \
-               --rm \
-               -v /etc/letsencrypt:/etc/letsencrypt \
-               -v /var/lib/letsencrypt:/var/lib/letsencrypt \
-               -v /var/www:/var/www \
-               palobo/certbot -t certonly --webroot -w WEBROOT_PATH -d DOMAIN
+```shell
+docker container run -it \
+       --rm \
+       -v /etc/letsencrypt:/etc/letsencrypt \
+       -v /var/www:/var/www \
+       palobo/certbot -t certonly --webroot -w WEBROOT_PATH -d DOMAIN
+```
 
 - `WEBROOT_PATH` is a public_html / webroot path. This can be specified multiple times to handle different domains; each domain will have the webroot path that preceded it and
 - `DOMAIN` is the domain name to apply. For multiple domains use multiple -d flags
 
 ### Start a Certbot instance with the Standalone plugin
 
-    docker run -it \
-               --rm \
-               -p 443:443 \
-               -v /etc/letsencrypt:/etc/letsencrypt \
-               -v $(pwd)/log:/var/log/letsencrypt \
-               palobo/certbot certonly --standalone \
-               -t -m me@myemail.com -d my.domain.com
+```shell
+docker container run -it \
+       --rm \
+       -p 443:443 \
+       -v /etc/letsencrypt:/etc/letsencrypt \
+       -v $(pwd)/log:/var/log/letsencrypt \
+       palobo/certbot certonly --standalone \
+       -t -m me@myemail.com -d my.domain.com
+```
+
+### Access the Container
+If for some reason you need to access the container to perform some troubleshooting or any other reason, you can do so by bypassing the entrypoint with:
+
+```shell
+docker container run -it \
+                 --entrypoint /bin/sh
+                 palobo/certbot
+```
 
 ## Exposed Ports
 
@@ -49,5 +61,3 @@ In it's simplest form, starting an instance is as easy as:
 ## Exported Volumes
 
 - `/etc/letsencrypt`
-- `/var/lib/letsencrypt`
-- `/var/www`
