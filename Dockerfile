@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine:3.5
 LABEL maintainer="Pedro Lobo <https://github.com/pslobo>"
 
 WORKDIR /opt/certbot
@@ -29,6 +29,6 @@ RUN export BUILD_DEPS="git \
     && rm -rf /var/cache/apk/*
 
 EXPOSE 80 443
-VOLUME /etc/letsencrypt /var/lib/letsencrypt /var/www
+VOLUME /etc/letsencrypt 
 
 ENTRYPOINT ["certbot"]
