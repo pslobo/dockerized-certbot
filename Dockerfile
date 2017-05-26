@@ -1,5 +1,7 @@
 FROM alpine:3.5
 LABEL maintainer="Pedro Lobo <https://github.com/pslobo>"
+LABEL Name="Dockerized Certbot"
+LABEL Version="1.1"
 
 WORKDIR /opt/certbot
 ENV PATH /opt/certbot/venv/bin:$PATH
