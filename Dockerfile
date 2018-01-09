@@ -1,7 +1,7 @@
-FROM alpine:3.5
+FROM alpine:3.6
 LABEL maintainer="Pedro Lobo <https://github.com/pslobo>"
 LABEL Name="Dockerized Certbot"
-LABEL Version="1.1"
+LABEL Version="1.2"
 
 WORKDIR /opt/certbot
 ENV PATH /opt/certbot/venv/bin:$PATH
@@ -18,7 +18,6 @@ RUN export BUILD_DEPS="git \
                 openssl-dev \
 		augeas-libs \
                 ${BUILD_DEPS} \
-
     && pip --no-cache-dir install virtualenv \
     && git clone https://github.com/letsencrypt/letsencrypt /opt/certbot/src \
     && virtualenv --no-site-packages -p python2 /opt/certbot/venv \
